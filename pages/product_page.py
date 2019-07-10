@@ -17,7 +17,6 @@ class ProductPage(BasePage):
         self.should_be_added_to_cart_message()
         self.should_be_cart_price_message()
 
-
     def should_be_add_to_cart_button(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_CART_BUTTON), "Add to basket button is not presented"
 
@@ -30,3 +29,11 @@ class ProductPage(BasePage):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         message_price = self.browser.find_element(*AlertLocators.PRICE_ALERT).text
         assert product_price == message_price, "Wrong price in message"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*AlertLocators.ADD_PRODUCT_TO_CART_ALERT), \
+            "Success message is presented, but should not be"
+
+    def should_element_disappear(self):
+        assert self.is_disappeared(*AlertLocators.ADD_PRODUCT_TO_CART_ALERT), \
+            "Element has not disappear, but should"
