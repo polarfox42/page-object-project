@@ -5,20 +5,19 @@ import pytest
 import time
 
 
-@pytest.fixture(scope="function")
-def setup(browser):
-    link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
-    browser.get(link)
-    email = str(time.time()) + "@fakemail.org"
-    password = "sghr53456ngrn8th-h"
-    register = LoginPage(browser, link)
-    register.register_new_user(email, password)
-    browser.implicitly_wait(5)
-    register.should_be_authorized_user()
-
-
 @pytest.mark.authorize
 class TestUserAddToCartFromProductPage(object):
+    @pytest.fixture(autouse=True)
+    def setup(browser):
+        link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+        browser.get(link)
+        email = str(time.time()) + "@fakemail.org"
+        password = "sghr53456ngrn8th-h"
+        register = LoginPage(browser, link)
+        register.register_new_user(email, password)
+        browser.implicitly_wait(5)
+        register.should_be_authorized_user()
+
     def test_user_cant_see_success_message(self, browser, setup):
         link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/"
         page = ProductPage(browser, link)
