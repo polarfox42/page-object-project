@@ -26,6 +26,7 @@ def browser(request):
         browser = webdriver.Firefox(firefox_profile=fp)
     else:
         print("Browser {} still is not implemented".format(browser_name))
+    browser.implicitly_wait(5)
     yield browser
     print("\nquit browser..")
     browser.quit()
