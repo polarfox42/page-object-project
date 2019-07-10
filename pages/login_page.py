@@ -8,6 +8,16 @@ class LoginPage(BasePage):
         self.url = url
         self.browser.implicitly_wait(timeout)
 
+    def register_new_user(self, email, password):
+        input_email = self.browser.find_element(*LoginPageLocators.REGISTRATION_EMAIL)
+        input_email.send_keys(email)
+        input_set_password = self.browser.find_element(*LoginPageLocators.REGISTRATION_PASSWORD)
+        input_set_password.send_keys(password)
+        input_submit_password = self.browser.find_element(*LoginPageLocators.CONFIRM_PASSWORD)
+        input_submit_password.send_keys(password)
+        register_button = self.browser.find_element(*LoginPageLocators.REGISTER_BUTTON)
+        register_button.click()
+
     def should_be_login_page(self):
         self.should_be_login_url()
         self.should_be_login_form()
