@@ -5,8 +5,6 @@ import pytest
 import time
 
 
-
-
 @pytest.mark.authorize
 class TestUserAddToCartFromProductPage(object):
     @pytest.fixture
