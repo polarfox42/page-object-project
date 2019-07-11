@@ -5,19 +5,19 @@ import pytest
 import time
 
 
+@pytest.fixture
+def setup(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+    browser.get(link)
+    email = str(time.time()) + "@fakemail.org"
+    password = "sghr53456ngrn8th-h"
+    register = LoginPage(browser, link)
+    register.register_new_user(email, password)
+    browser.implicitly_wait(5)
+    register.should_be_authorized_user()
+
 @pytest.mark.authorize
 class TestUserAddToCartFromProductPage(object):
-    @pytest.fixture(autouse=True)
-    def setup(browser):
-        link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
-        browser.get(link)
-        email = str(time.time()) + "@fakemail.org"
-        password = "sghr53456ngrn8th-h"
-        register = LoginPage(browser, link)
-        register.register_new_user(email, password)
-        browser.implicitly_wait(5)
-        register.should_be_authorized_user()
-
     def test_user_cant_see_success_message(self, browser, setup):
         link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/"
         page = ProductPage(browser, link)
@@ -33,7 +33,7 @@ class TestUserAddToCartFromProductPage(object):
         page.add_to_cart_check()
 
 
-@pytest.mark.need_review
+# @pytest.mark.need_review
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
